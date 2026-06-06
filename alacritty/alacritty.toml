@@ -1,0 +1,45 @@
+# Alacritty configuration
+# Ported to work on Windows/WSL dotfiles repository
+
+import = [
+  "themes/breeze.toml"
+]
+
+[shell]
+program = "wsl"
+args = ["-d", "Ubuntu", "--cd", "/mnt/c/Users/anik2/OneDrive/Documents/code"]
+
+[window]
+dimensions = { columns = 100, lines = 30 }
+
+[font]
+size = 11.0
+
+[font.normal]
+family = "Cascadia Mono"
+style = "Regular"
+
+[cursor]
+style = { shape = "Block", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+[selection]
+save_to_clipboard = true
+
+[keyboard]
+bindings = [
+  # Copy / Paste (Windows muscle memory)
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+
+  # Alternative (Alt-based, faster)
+  { key = "C", mods = "Alt", action = "Copy" },
+  { key = "V", mods = "Alt", action = "Paste" },
+
+  # Clear selection (important)
+  { key = "Escape", mods = "Shift", action = "ClearSelection" },
+
+  # Clear scrollback
+  { key = "K", mods = "Control|Shift", action = "ClearHistory" }
+]

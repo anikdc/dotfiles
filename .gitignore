@@ -1,0 +1,17 @@
+# Backups and temporary files
+*.bak
+*.bak.*
+*~
+\#*#
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# TMUX plugins (these will be fetched dynamically by TPM)
+tmux/plugins/
+.tmux/
+
+# WSL / Windows local caches
+.cache/
+.npm/
+.yarn/
