@@ -1,4 +1,4 @@
-# 🛠️ Cross-Platform Dotfiles (Windows & WSL)
+# Cross-Platform Dotfiles (Windows & WSL)
 
 A clean, modern, and highly modular repository for managing terminal configuration files across Windows and Windows Subsystem for Linux (WSL).
 
@@ -8,7 +8,7 @@ A clean, modern, and highly modular repository for managing terminal configurati
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 dotfiles/
@@ -27,9 +27,9 @@ dotfiles/
 
 ---
 
-## ⚡ Features & Configurations
+## Features & Configurations
 
-### 🖥️ Alacritty Terminal
+### Alacritty Terminal
 *   **Performance**: Fast, GPU-accelerated terminal emulator configured for Windows.
 *   **Shell Integration**: Automatically launches directly into WSL Ubuntu.
 *   **Look & Feel**: Clean borders, custom window sizes, blinking block cursor, and KDE Breeze dark theme.
@@ -39,7 +39,7 @@ dotfiles/
     *   Quick mouse-free copy-paste using Alt-key variations (`Alt + C` / `Alt + V`).
     *   Easy scrollback clearing with `Ctrl + Shift + K`.
 
-### 🗂️ Tmux Window Manager
+### Tmux Window Manager
 *   **Navigation**: Vim-like pane navigation (`Prefix` + `h`/`j`/`k`/`l`).
 *   **TPM Support**: Built-in compatibility with Tmux Plugin Manager.
 *   **Visual Highlights**: Minimalist top status bar, centered window list, and transparent background.
@@ -47,14 +47,14 @@ dotfiles/
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 Before installing, make sure to clone this repository to your computer:
 ```bash
 git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/OneDrive/Documents/Code/dotfiles
 ```
 
-### 🪟 Windows Setup (Alacritty)
+### Windows Setup (Alacritty)
 
 #### Prerequisites
 1.  **Fonts**: Install [Cascadia Code / Cascadia Mono](https://github.com/microsoft/cascadia-code/releases) (or any other Nerd Font of your choice).
@@ -70,7 +70,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 ---
 
-### 🐧 WSL Setup (Tmux)
+### WSL Setup (Tmux)
 
 #### Prerequisites
 Ensure `tmux` and `git` are installed inside WSL Ubuntu:
@@ -93,7 +93,7 @@ chmod +x ./scripts/bootstrap.sh
 
 ---
 
-## 🎹 Keyboard Shortcuts Cheat Sheet
+## Keyboard Shortcuts Cheat Sheet
 
 ### tmux Navigation
 
@@ -118,6 +118,6 @@ chmod +x ./scripts/bootstrap.sh
 
 ---
 
-## 📄 License
+## License
 
 This repository is licensed under the [MIT License](LICENSE). Feel free to fork, modify, and customize it!
