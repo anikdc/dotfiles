@@ -1,0 +1,7 @@
+{
+  "window.autoDetectColorScheme": true,
+  "claudeCode.allowDangerouslySkipPermissions": true,
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.initialPermissionMode": "bypassPermissions",
+  "git.autofetch": true
+}

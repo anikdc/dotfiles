@@ -1,5 +1,5 @@
 # bootstrap.ps1
-# Automates the setup of Alacritty configuration on Windows.
+# Automates the Alacritty configuration for Windows + MSYS2 UCRT64.
 
 $ErrorActionPreference = "Stop"
 

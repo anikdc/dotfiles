@@ -1,10 +1,10 @@
-# Cross-Platform Dotfiles (Windows & WSL)
+# Cross-Platform Dotfiles (macOS & Windows/MSYS2)
 
-A clean, modern, and highly modular repository for managing terminal configuration files across Windows and Windows Subsystem for Linux (WSL).
+A single source of truth for the terminal setup shared between the current Windows/MSYS2 machine and a new Mac.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform Support](https://img.shields.io/badge/Platform-Windows%20%7C%20WSL%20Ubuntu-orange.svg)]()
-[![Shell](https://img.shields.io/badge/Shell-Bash%20%7C%20PowerShell-brightgreen.svg)]()
+[![Platform Support](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows-orange.svg)]()
+[![Shell](https://img.shields.io/badge/Shell-Zsh%20%7C%20Bash%20%7C%20PowerShell-brightgreen.svg)]()
 
 ---
 
@@ -13,14 +13,22 @@ A clean, modern, and highly modular repository for managing terminal configurati
 ```text
 dotfiles/
 ├── alacritty/
-│   ├── alacritty.toml         # Portable Alacritty config (Windows/WSL)
+│   ├── alacritty.toml         # Windows + MSYS2 Alacritty config
+│   ├── alacritty.macos.toml   # macOS Alacritty config
 │   └── themes/
 │       └── breeze.toml        # KDE Breeze color theme
 ├── tmux/
-│   └── tmux.conf             # TMUX config with TPM support (WSL)
+│   └── tmux.conf              # Portable config with TPM support
+├── zsh/
+│   └── zshrc                  # macOS shell config
+├── git/
+│   └── gitconfig              # Portable public Git identity
+├── optional/                  # Reviewed, non-secret app preferences
 ├── scripts/
-│   ├── bootstrap.ps1         # Windows setup script (PowerShell)
-│   └── bootstrap.sh          # WSL/Linux setup script (Bash)
+│   ├── bootstrap-macos.sh     # Complete new-Mac setup
+│   ├── bootstrap.ps1          # Windows Alacritty setup
+│   └── bootstrap.sh           # MSYS2/WSL/Linux tmux setup
+├── Brewfile                   # Mac packages and font
 ├── .gitignore                # Rules for files to not track in Git
 └── LICENSE                   # MIT License
 ```
@@ -30,66 +38,74 @@ dotfiles/
 ## Features & Configurations
 
 ### Alacritty Terminal
-*   **Performance**: Fast, GPU-accelerated terminal emulator configured for Windows.
-*   **Shell Integration**: Automatically launches directly into WSL Ubuntu.
-*   **Look & Feel**: Clean borders, custom window sizes, blinking block cursor, and KDE Breeze dark theme.
+*   **Platform launchers**: MSYS2 UCRT64 on Windows and login zsh on macOS.
+*   **Look & Feel**: 100x30 window, blinking Beam cursor, and KDE Breeze dark theme.
 *   **Typography**: Styled with `Cascadia Mono` font (size 11).
 *   **Quality of Life**:
-    *   Windows-style copy-paste shortcuts (`Ctrl + Shift + C` / `Ctrl + Shift + V`).
-    *   Quick mouse-free copy-paste using Alt-key variations (`Alt + C` / `Alt + V`).
-    *   Easy scrollback clearing with `Ctrl + Shift + K`.
+    *   Native Mac copy/paste (`Command + C` / `Command + V`).
+    *   Cross-platform copy/paste (`Ctrl + Shift + C` / `Ctrl + Shift + V`).
+    *   Selection-to-clipboard and Shift+Enter support.
 
 ### Tmux Window Manager
 *   **Navigation**: Vim-like pane navigation (`Prefix` + `h`/`j`/`k`/`l`).
 *   **TPM Support**: Built-in compatibility with Tmux Plugin Manager.
 *   **Visual Highlights**: Minimalist top status bar, centered window list, and transparent background.
-*   **Sensible Defaults**: Mouse support enabled, 10,000-line history scrollback, and 0ms escape-time delay (great for Vim/Neovim).
+*   **Clipboard**: Uses `pbcopy` on macOS and `clip.exe` under MSYS2.
+*   **Plugins**: TPM, tmux-sensible, and tmux-menus.
+*   **Sensible Defaults**: Mouse support, 50,000-line history, true color, and 0ms escape-time delay.
 
 ---
 
 ## Installation & Setup
 
-Before installing, make sure to clone this repository to your computer:
+### New Mac
+
+1. Install [Homebrew](https://brew.sh/).
+2. Install Alacritty using the current macOS DMG from the [official releases page](https://github.com/alacritty/alacritty/releases/latest).
+3. Clone this repository and run the Mac bootstrap:
+
 ```bash
-git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/OneDrive/Documents/Code/dotfiles
+mkdir -p ~/Documents/Code
+git clone https://github.com/anikdc/dotfiles.git ~/Documents/Code/dotfiles
+cd ~/Documents/Code/dotfiles
+chmod +x scripts/bootstrap-macos.sh
+./scripts/bootstrap-macos.sh
 ```
 
-### Windows Setup (Alacritty)
+The script installs Git, tmux, and Cascadia Mono through the `Brewfile`; backs up conflicting files under `~/.dotfiles-backup/<timestamp>`; links Alacritty, tmux, zsh, and Git configuration; and installs TPM plugins.
 
-#### Prerequisites
-1.  **Fonts**: Install [Cascadia Code / Cascadia Mono](https://github.com/microsoft/cascadia-code/releases) (or any other Nerd Font of your choice).
-2.  **Terminal**: Ensure [Alacritty](https://github.com/alacritty/alacritty) is installed on Windows.
+The Alacritty Homebrew cask is deliberately omitted because Homebrew schedules it for disabling on 2026-09-01. The upstream DMG remains the stable Mac installation route.
 
-#### Running the Bootstrap Script
-Open PowerShell and run the Windows setup script:
+### Existing Windows/MSYS2 machine
+
+Alacritty is installed from PowerShell:
+
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\scripts\bootstrap.ps1
 ```
-*Note: If Developer Mode is disabled on Windows, the script will automatically fallback to a hard link or a direct copy so that administrative privileges are not strictly required.*
 
----
+Tmux is installed from MSYS2/WSL/Linux Bash:
 
-### WSL Setup (Tmux)
-
-#### Prerequisites
-Ensure `tmux` and `git` are installed inside WSL Ubuntu:
 ```bash
-sudo apt update && sudo apt install tmux git -y
-```
-
-#### Running the Bootstrap Script
-Run the bash setup script inside your WSL terminal:
-```bash
-chmod +x ./scripts/bootstrap.sh
+chmod +x scripts/bootstrap.sh
 ./scripts/bootstrap.sh
 ```
-*This will create the tmux symlink and automatically clone the Tmux Plugin Manager (TPM) if it's missing.*
 
-#### Install Tmux Plugins
-1.  Open `tmux`.
-2.  Press `Ctrl + b` then `Shift + i` (i.e. `Ctrl + b` followed by `I` for Install).
-3.  TPM will download and source your plugins automatically!
+### Optional application settings
+
+The `optional/` directory is not installed automatically:
+
+* `optional/claude/settings.json` contains only theme and effort preferences.
+* `optional/cursor/settings.review-before-install.json` preserves the live settings but enables permission bypass. Review it before installation.
+* `optional/codex/config-portable.toml` contains only portable preferences. Merge it into the Mac-generated Codex config instead of replacing that file.
+* `optional/codex/plugin-inventory.md` records plugins to reinstall through Codex.
+
+Credentials, SSH private keys, histories, sessions, trusted-project grants, caches, and machine-generated runtime paths are intentionally excluded. Generate a new SSH key on the Mac:
+
+```bash
+ssh-keygen -t ed25519 -C "anik29dc@gmail.com"
+```
 
 ---
 
@@ -106,14 +122,16 @@ chmod +x ./scripts/bootstrap.sh
 | **Reload Config** | `Ctrl + b` ➔ `r` |
 | **Toggle Status Bar** | `Ctrl + b` ➔ `b` |
 | **Kill Session** | `Ctrl + b` ➔ `X` |
+| **Open Menu** | `Ctrl + b` ➔ `M` |
 
 ### Alacritty Actions
 
 | Action | Shortcut |
 | :--- | :--- |
-| **Copy Text** | `Ctrl + Shift + C` or `Alt + C` |
-| **Paste Text** | `Ctrl + Shift + V` or `Alt + V` |
-| **Clear History** | `Ctrl + Shift + K` |
+| **Copy Text on Mac** | `Command + C` |
+| **Paste Text on Mac** | `Command + V` |
+| **Cross-platform Copy/Paste** | `Ctrl + Shift + C` / `Ctrl + Shift + V` |
+| **Clear History on Mac** | `Command + K` |
 | **Cancel Selection** | `Shift + Escape` |
 
 ---

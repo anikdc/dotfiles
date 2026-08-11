@@ -15,3 +15,10 @@ tmux/plugins/
 .cache/
 .npm/
 .yarn/
+
+# Never commit credentials or local application histories.
+**/.credentials.json
+**/credentials.toml
+**/history.jsonl
+**/file-history/
+**/workspaceStorage/

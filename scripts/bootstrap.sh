@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # bootstrap.sh
-# Automates the setup of tmux configurations inside WSL / Linux.
+# Automates the portable tmux configuration inside MSYS2 / WSL / Linux.
 
 set -euo pipefail
 
